@@ -28,9 +28,8 @@ boolean onlyStandby = true;
 
 int answeringTeam;
 
-//meril -> membuat array yang akan diisi maksimal 3 data tim yang menjawab salah
 int falseAnsweringTeam[3] = {0,0,0};
-//meril -> membuat array yang akan diisi maksimal 3 data tim yang menjawab salah
+String teams = "";
 
 void setup() {
   Serial.begin(4800);
@@ -53,7 +52,7 @@ void setup() {
 void loop() {
   if(standbyTime){
     myDisplay.setTextAlignment(PA_CENTER);
-    myDisplay.print("STDBY");
+    
     if(digitalRead(TEAM_A) == LOW){
         if(falseAnsweringTeam[0] == 1){
           return;
@@ -92,7 +91,8 @@ void loop() {
       onlyStandby = false;
       delay(500);
     }
-    if (digitalRead(JURI_STANDBY) == LOW && lastStandby == true){
+    
+    if(digitalRead(JURI_STANDBY) == LOW && lastStandby == true){
       Serial.println("JURI MENAMPILKAN SEMUA NILAI, SEKALIGUS STANDBY");
       delay(500);
       lastStandby = false;
@@ -106,16 +106,26 @@ void loop() {
       myDisplay.setTextAlignment(PA_CENTER);
       myDisplay.print("C" + String(scoreC));
       delay(2000);
-      myDisplay.setTextAlignment(PA_CENTER);
-      myDisplay.print("STDBY");
     }
   }
+  
   if (standbyTime == false || onlyStandby == true) {
     if(digitalRead(JURI_STANDBY) == LOW){
       lastStandby = true;
       Serial.println("SEKARANG STANDBY");
       myDisplay.setTextAlignment(PA_CENTER);
-      myDisplay.print("STDBY");
+      teams = "";
+      if(falseAnsweringTeam[0] == 0){
+        teams = teams + "A";
+      }
+      if(falseAnsweringTeam[1] == 0){
+        teams = teams + "B";
+      }
+      if(falseAnsweringTeam[2] == 0){
+        teams = teams + "C";
+      }
+      myDisplay.print(teams);
+      teams = "";
       delay(250);
       standbyTime = true;
       falseAnsweringTeam[0] = 0;
