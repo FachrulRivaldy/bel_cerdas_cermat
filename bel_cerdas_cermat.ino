@@ -111,6 +111,18 @@ void loop() {
       myDisplay.setTextAlignment(PA_CENTER);
       myDisplay.print("C" + String(scoreC));
       delay(2000);
+      teams = " ";
+      if(falseAnsweringTeam[0] == 0){
+        teams = teams + "A";
+      }
+      if(falseAnsweringTeam[1] == 0){
+        teams = teams + "B";
+      }
+      if(falseAnsweringTeam[2] == 0){
+        teams = teams + "C";
+      }
+      myDisplay.print(teams);
+      teams = " ";
     }
   }
 
@@ -122,7 +134,7 @@ void loop() {
     falseAnsweringTeam[1] = 0;
     falseAnsweringTeam[2] = 0;
     delay(1000);
-    myDisplay.print("A B C");
+    myDisplay.print("ABC");
   }
   
   if (standbyTime == false) {
